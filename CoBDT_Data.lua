@@ -21,6 +21,7 @@ characterData.saelaris = {
         "athall",
         "eleonar",
         "snikkels",
+        "astarielle",
     },
     sound = "wilhelm"
 }
@@ -38,7 +39,8 @@ characterData.avael = {
 }
 characterData.horricee = {
     alts = {
-        "ireni",
+        "irení",
+        "irenious",
     },
     messages = {
         "This is my first totally original and very funny message, it can include my current death <n>.",
@@ -46,13 +48,15 @@ characterData.horricee = {
         "This is my first death ever! Wait what no shut up I haven't died <n> times!",
         "Your god has fallen, fear not however for I shall arise again, this is the <nth> time after all!",
     },
-    sound = "Horrice_death"
+    sound = "Horricee_death"
 }
-characterData.becks = {
+characterData.poplar = {
     alts = {
         "toasty",
         "bex",
         "becka",
+        "hardwork",
+        "bicks",
     },
     messages = {
         "I guess Becks will be LEAF-ing now, for the <nth> time",
@@ -60,10 +64,12 @@ characterData.becks = {
         "Becks has gotten to the ROOT of the problem <n> times! Her health hit zero.",
         "Becks WOOD have lived <n> times if not for the tank.",
     },
-    sound = "Becks_nooooo"
+    sound = "deathnoise"
 }
 characterData.illasei = {
-    alts = {},
+    alts = {
+        "killasei",
+    },
     messages = {},
     sound = "oopsie"
 }
@@ -133,19 +139,52 @@ characterData.neshali = {
 }
 characterData.talkui = {
     alts = {
-        "kimrog"
+        "kimrog",
+        "enril"
     },
     messages = {},
-    sound = "gimli-laugh"
+    sound = "FelOrcWoundCritC"
 }
 characterData.rugnarson = {
     alts = {
-        "Puna"
+        "puna"
     },
     messages = {},
     sound = "nani"
 }
-
+characterData.akaani = {
+    alts = {
+        "delthea",
+        "yunara",
+        "kallistra"
+    },
+    messages = {},
+    sound = "RamDeath"
+}
+characterData.marvinator = {
+    alts = {
+        "rotahildr",
+        "jandijilija",
+        "nemetona",
+        "xeneta"
+    },
+    messages = {
+        "I knew I should've stayed in bed this morning.",
+        "All out of that special sauce.",
+    },
+    sound = "Marinedeath"
+}
+characterData.zos = {
+    alts = {},
+    messages = {},
+    sound = "zos"
+}
+characterData.hiddeneasteregg = {
+    alts = {},
+    messages = {},
+    sound = "horsewhinny"
+}
+-- TODO: find better eastereggsound
 
 -- check the characters table to make sure ALL NAMES are lowercase, and scream in your face if some aren't.
 do
@@ -160,7 +199,7 @@ do
 
     if next(bad) then
         C_Timer.After(1, function()
-            debugPrint("BAD! VERY BAD! There are characters with Capital Letters in the CoBDT character database:")
+            debugPrint("BAD! VERY BAD! There are characters with Capital Letters in the COBDT character database:")
             debugPrint(table.concat(bad, ", "))
         end)
     end
