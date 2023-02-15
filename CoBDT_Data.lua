@@ -174,10 +174,10 @@ characterData.marvinator = {
     },
     sound = "Marinedeath"
 }
-characterData.zos = {
+characterData.zoz = {
     alts = {},
     messages = {},
-    sound = "zos"
+    sound = "zoz"
 }
 characterData.hiddeneasteregg = {
     alts = {},
