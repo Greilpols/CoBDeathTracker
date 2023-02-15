@@ -123,14 +123,16 @@ function CoBDTEventHandlers.MEMBER_DIED(name)
     end
 end
 
+-- Formerly a special death for Sael, now his name shall be immortalised as the "guildleader died" function name.
 function CoBDTEventHandlers.SAEL_DIED(character, count)
     local playerRoot = cobdt.isCOBCharacter(player)
 
-    if (playerRoot == "saelaris") or UnitInRaid(character) or UnitInParty(character) then
+    if (playerRoot == "poplar") or UnitInRaid(character) or UnitInParty(character) then
         -- don't do anything if we are in party with or identify as saelaris
+            -- formerly Saelaris, now "poplar" aka Becks be the 'willing' victim
         return
     elseif not (options.mutespecial or options.muteall) then
-        print(format("|cff8f8f8fSomewhere, somehow, |cffC79C6ESaelaris|r died. Again."))
+        print(format("|cff8f8f8fSomewhere, somehow, |cffC79C6EBecks|r died. Again."))
         play("saelspecial")
     end
 end
