@@ -40,7 +40,7 @@ function cobdt.getCharacterSound(id)
     elseif id == "saelspecial" then
         return pre .. saelspecial .. post
     else
-        local main = cobdt.isTMCharacter(id)
+        local main = cobdt.isCOBCharacter(id)
         if main then
             if characterData[main].sound then
                 return pre .. characterData[main].sound .. post
@@ -54,7 +54,7 @@ function cobdt.getCharacterSound(id)
 end
 
 -- determines if <query> belongs to a known main TM member
-local function isTMCharacter(queryName)
+local function isCOBCharacter(queryName)
     queryName = queryName:lower()
 
     -- try to match a character name
@@ -100,4 +100,4 @@ end
 
 -- make chars public for other uses
 cobdt.patchCharacterList = patchCharacterList
-cobdt.isTMCharacter = isTMCharacter
+cobdt.isCOBCharacter = isCOBCharacter

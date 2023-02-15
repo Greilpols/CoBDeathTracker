@@ -122,7 +122,7 @@ function CoBDTEventHandlers.MEMBER_DIED(name)
 end
 
 function CoBDTEventHandlers.SAEL_DIED(character, count)
-    local playerRoot = cobdt.isTMCharacter(player)
+    local playerRoot = cobdt.isCOBCharacter(player)
 
     if (playerRoot == "saelaris") or UnitInRaid(character) or UnitInParty(character) then
         -- don't do anything if we are in party with or identify as saelaris
@@ -165,7 +165,7 @@ function eventHandlers.PLAYER_DEAD()
         C_Timer.After(options.timeout, function() deathEventCooldown = false end)
     end
 
-    local member = cobdt.isTMCharacter(player)
+    local member = cobdt.isCOBCharacter(player)
     local guilded = IsInGuild() and GetGuildInfo("player") == cobdt.guildName
     local isParty = IsInGroup()
     local isRaid = IsInRaid()

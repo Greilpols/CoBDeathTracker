@@ -142,7 +142,7 @@ handlers.toggleMute = {
     command = function(args)
         if args[2] and type(args[2]) == "string" then
             local character = strtrim(args[2])
-            local member = cobdt.isTMCharacter(character)
+            local member = cobdt.isCOBCharacter(character)
 
             if member then
                 if db.mutedCharacters[member] then
@@ -251,7 +251,7 @@ handlers.getAlts = {
         if args[2] then
             local main = strtrim(args[2])
 
-            if cobdt.isTMCharacter(main) then
+            if cobdt.isCOBCharacter(main) then
                 if #cobdt.characterData[main].alts > 0 then
                     local alts = table.concat(cobdt.characterData[main].alts, ", ")
                     addonPrint("%s has %i alts: [%s]", firstToUpper(main), #cobdt.characterData[main].alts, alts)
@@ -278,7 +278,7 @@ handlers.setAlt = {
             local main = strtrim(args[2])
             local newalt = strtrim(args[3])
 
-            if cobdt.isTMCharacter(main) then
+            if cobdt.isCOBCharacter(main) then
                 local dbec = db.extraCharacters
                 if not dbec[main] then dbec[main] = {} end
 
@@ -316,7 +316,7 @@ handlers.removeAlt = {
         local main = strtrim(args[2])
         local alt = strtrim(args[3])
 
-        if cobdt.isTMCharacter(main) then
+        if cobdt.isCOBCharacter(main) then
             local dbec = db.extraCharacters
             if dbec[main] then
                 local found = false
@@ -354,7 +354,7 @@ handlers.queryName = {
     command = function(args)
         if args[2] then
             local query = firstToUpper(args[2])
-            local tmChar = cobdt.isTMCharacter(query)
+            local tmChar = cobdt.isCOBCharacter(query)
             local mainCharacter = tmChar and firstToUpper(tmChar) or false
             addonPrint("\"%s\" %s", query, mainCharacter and format("is a known TM character (main: \"%s\")", mainCharacter) or ("is NOT a known TM character"))
 
