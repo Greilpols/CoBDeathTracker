@@ -1,4 +1,4 @@
-## Interface: 20501
+## Interface: 30400
 ## Title: |cff00FF00TM |cffff00ffDeath Tracker|r
 ## Author: Greilpols, original addon made by Avael
 ## Version: 0.0.1
