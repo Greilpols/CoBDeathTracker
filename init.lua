@@ -17,6 +17,8 @@ local eventHandlers = {}
 local options = {}
 local db = {}
 
+-- TODO: fix a different colour scheme
+
 local colors = {
     tm_green = "|cff00af00",
     tm_red = "|cffff0000",
@@ -63,7 +65,7 @@ local function addonPrint(msg, ...)
         msg = format(msg, ...)
     end
 
-    print(format("%sTM|r%sDT|r:: %s", colors.tm_green, colors.tm_purple, msg))
+    print(format("%sCoB|r%sDT|r:: %s", colors.tm_green, colors.tm_purple, msg))
 end
 cobdt.addonPrint = addonPrint
 
@@ -74,7 +76,7 @@ local function debugPrint(msg, ...)
     end
 
     if options.debug then
-        print(format("%sTM|r%sDT%sDebug|r:: %s", colors.tm_green, colors.tm_purple, colors.tm_debug, msg))
+        print(format("%sCoB|r%sDT%sDebug|r:: %s", colors.tm_green, colors.tm_purple, colors.tm_debug, msg))
     end
 end
 cobdt.debugPrint = debugPrint
@@ -104,8 +106,8 @@ function eventHandlers.ADDON_LOADED(self, ...)
             cobdt.patchCharacterList(db.extraCharacters)
         end
 
-        local identity = cobdt.isTMCharacter(cobdt.player)
-        addonPrint("Loaded. You are %s%s|r.", identity and "|cff00aa00" or "|cffaa0000", identity and cobdt.firstToUpper(identity) or "not a recognized TM member")
+        local identity = cobdt.isCoBCharacter(cobdt.player)
+        addonPrint("Loaded. You are %s%s|r.", identity and "|cff00aa00" or "|cffaa0000", identity and cobdt.firstToUpper(identity) or "not a recognized CoB member")
     end
 end
 
@@ -133,4 +135,4 @@ cobdt.frame = frame
 cobdt.options = options
 cobdt.db = db
 cobdt.verifyOptions = verifyOptions
-cobdt.guildName = "Twisted Minds"
+cobdt.guildName = "Cats on Balconies"
