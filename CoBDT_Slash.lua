@@ -47,7 +47,7 @@ do
 end
 
 -- SLASH_XX setup
-SLASH_CoBDT1 = "/cobdt"
+SLASH_COBDT1 = "/cobdt"
 
 -- holds all the final command handlers
 handlers.help = {
@@ -398,7 +398,7 @@ handlers.wipeSettings = {
     command = function()
         addonPrint("Wiped settings & (extra) alt database")
         wipe(db.extraCharacters)
-        wipe(CoBDT_Options)
+        wipe(COBDT_Options)
         cobdt.verifyOptions()
         return true
     end,
@@ -492,4 +492,4 @@ local function commandHandler(msg, EditBox)
     end
 end
 
-SlashCmdList["CoBDT"] = commandHandler
+SlashCmdList["COBDT"] = commandHandler
