@@ -10,6 +10,7 @@ function module.init(opt, database, addonframe)
 
     frame:RegisterEvent("CHAT_MSG_ADDON")
     frame:RegisterEvent("PLAYER_DEAD")
+    frame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 
 -- lua locals
@@ -79,6 +80,7 @@ local CoBDTEvent = {
     SAEL_DIED = true,
     MEMBER_DIED = true,
     OTHER_DIED = true,
+    NEW_MOUNT_ACQUIRED = true,
 }
 enumify(CoBDTEvent)
 
@@ -130,6 +132,12 @@ function CoBDTEventHandlers.SAEL_DIED(character, count)
     elseif not (options.mutespecial or options.muteall) then
         print(format("|cff8f8f8fSomewhere, somehow, |cffC79C6ESaelaris|r died. Again."))
         play("saelspecial")
+    end
+end
+
+function CoBDTEventHandlers.NEW_MOUNT_ACQUIRED(character)
+    if not (options.mutespecial or options.muteall) then
+        play("hiddeneasteregg")
     end
 end
 
@@ -204,5 +212,19 @@ function eventHandlers.PLAYER_DEAD()
         else
             -- do nothing?
         end
+    end
+end
+
+function eventHandlers.UNIT_SPELLCAST_SUCCEEDED(null, caster, something, spellID)
+    --Lack of actual proper documentation makes the fishing for in game bits a bit more tricky
+    --debugPrint("SpellID: %s", spellID) -- 55884 is the (only) accurate one found so far; also includes some pets
+    --Does not break anything either, so entirely safe to use; worst case scenario it goes off when someone gets a pet
+    if spellID == 55884 and caster == "player" then
+        broadcast{
+                event = COBDTEvent.NEW_MOUNT_ACQUIRED,
+                message = "hiddeneasteregg", -- TODO find fitting name for mount acquired
+                channel = addonMessageChannels.GUILD,
+            }
+            -- TODO: Remove this and make it a full function ala saelspecial
     end
 end
