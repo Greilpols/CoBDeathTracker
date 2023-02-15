@@ -426,6 +426,14 @@ handlers.checkGuilded = {
     description = "Check whether the current character is detected as being a member of the <" .. cobdt.guildName .. "> guild.",
 }
 
+handlers.testBroadCast = {
+    command = function()
+        debugPrint("Attempting to do a test Broadcast")
+
+    end,
+    description = "Attempt to test and debug issues with the addon",
+}
+
 -- picks the appropriate handler based on keywords / aliases
 commandAlias = {
     mute = handlers.toggleMute,
@@ -451,6 +459,7 @@ commandAlias = {
 
     -- debug-ish stuff
     test = handlers.testPlay,
+    testbroadcast = handlers.testBroadCast,
     query = handlers.queryName,
     fake = handlers.fakeDeathEvent,
     fakespecial = handlers.fakeSaelEvent,
