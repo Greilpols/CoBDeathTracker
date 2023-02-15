@@ -17,7 +17,6 @@ local characterData = cobdt.characterData
 local pre = "Interface\\AddOns\\CoBDeathTracker\\Sounds\\"
 local pre_special = "Interface\\AddOns\\CoBDeathTracker\\Sounds\\wilhelm_distant\\"
 local post = ".mp3"
-local testsound = "wilhelm"
 
 -- sekrit speshul
 -- keeping the name of it in his honour
