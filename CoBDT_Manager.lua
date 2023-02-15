@@ -20,7 +20,12 @@ local post = ".mp3"
 local testsound = "wilhelm"
 
 -- sekrit speshul
+-- keeping the name of it in his honour
 local saelspecial = {
+    "Becks_nooooo",
+}
+
+local wilhelm_distant = {
     "wilhelm_echo_left",
     "wilhelm_echo_right",
     "wilhelm_faded_left",
@@ -29,12 +34,12 @@ local saelspecial = {
     "wilhelm_right",
 }
 
--- retrieves a sound by mian character name
+-- retrieves a sound by main character name
 function cobdt.getCharacterSound(id)
     if id == "test" then
-        return pre .. testsound .. post
+        return pre_special .. wilhelm_distant[math.random(1, #wilhelm_distant)] .. post
     elseif id == "saelspecial" then
-        return pre_special .. saelspecial[math.random(1, #saelspecial)] .. post
+        return pre .. saelspecial .. post
     else
         local main = cobdt.isTMCharacter(id)
         if main then
@@ -44,7 +49,7 @@ function cobdt.getCharacterSound(id)
                 return false, string.format("no sound: %s", main)
             end
         else
-            return false, string.format("not a TM character: %s. This is a strange error, and you should screenshot this message and tell Avael.", id)
+            return false, string.format("not a CoB character: %s. This is a strange error, and you should screenshot this message and tell Me.", id)
         end
     end
 end
