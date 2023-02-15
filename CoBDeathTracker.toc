@@ -1,0 +1,12 @@
+## Interface: 20501
+## Title: |cff00FF00TM |cffff00ffDeath Tracker|r
+## Author: Greilpols, original addon made by Avael
+## Version: 0.0.1
+## Notes: & Kittens and rainbows &
+## SavedVariables: CoBDT_Options, CoBDT_DB
+
+init.lua
+CoBDT_Core.lua
+CoBDT_Data.lua
+CoBDT_Manager.lua
+CoBDT_Slash.lua

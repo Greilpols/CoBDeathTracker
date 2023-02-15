@@ -1,9 +1,9 @@
--- core TMDT code
-local addonName, tmdt = ...
+-- core CoBDT code
+local addonName, cobdt = ...
 local module = {}
-tmdt.modules.core = module
+cobdt.modules.core = module
 
--- tmdt module
+-- cobdt module
 local options, db, frame
 function module.init(opt, database, addonframe)
     options, db, frame = opt, database, addonframe
@@ -16,23 +16,23 @@ end
 local format = string.format
 
 -- module locals
-local addonMsgPrefix = tmdt.addonMsgPrefix
-local eventHandlers = tmdt.eventHandlers
-local addonPrint = tmdt.addonPrint
-local debugPrint = tmdt.debugPrint
-local player = tmdt.player
-local TMDTEventHandlers = {}
+local addonMsgPrefix = cobdt.addonMsgPrefix
+local eventHandlers = cobdt.eventHandlers
+local addonPrint = cobdt.addonPrint
+local debugPrint = cobdt.debugPrint
+local player = cobdt.player
+local CoBDTEventHandlers = {}
 local deathEventCooldown = false
 
 -- helpers
 local function firstToUpper(str)
     return (str:gsub("^%l", string.upper))
 end
-tmdt.firstToUpper = firstToUpper
+cobdt.firstToUpper = firstToUpper
 
 -- play a sound by "id" (usually character name)
 local function play(id)
-    local soundFile, errmsg = tmdt.getCharacterSound(id)
+    local soundFile, errmsg = cobdt.getCharacterSound(id)
 
     if soundFile then
         PlaySoundFile(soundFile, options.channel)
@@ -40,7 +40,7 @@ local function play(id)
         debugPrint("getCharacterSound(%s) error: %s", id, errmsg)
     end
 end
-tmdt.play = play
+cobdt.play = play
 
 -- makes every value in the table equal to its key
 local function enumify(t)
@@ -74,13 +74,13 @@ local addonMessageChannels = {
 }
 enumify(addonMessageChannels)
 
--- TMDT addonMessage types
-local TMDTEvent = {
+-- CoBDT addonMessage types
+local CoBDTEvent = {
     SAEL_DIED = true,
     MEMBER_DIED = true,
     OTHER_DIED = true,
 }
-enumify(TMDTEvent)
+enumify(CoBDTEvent)
 
 -- addon msg stuff
 -- broadcasts a message
@@ -88,7 +88,7 @@ local function broadcast(data)
     local event, msg, channel, target = data.event, data.message, data.channel, data.target
 
     if not (msg and channel) then
-        debugPrint("TMDT_ERROR: Missing argument to broadcast()")
+        debugPrint("CoBDT_ERROR: Missing argument to broadcast()")
         if not msg then
             debugPrint("Missing: msg")
         end
@@ -110,19 +110,19 @@ local function broadcast(data)
     end
 end
 
--- handle TMDT events, these are for INCOMING events.
-function TMDTEventHandlers.MEMBER_DIED(name)
+-- handle CoBDT events, these are for INCOMING events.
+function CoBDTEventHandlers.MEMBER_DIED(name)
     if not options.muteall then
         if not db.mutedCharacters[name] then
-            tmdt.play(name)
+            cobdt.play(name)
         else
             debugPrint("Skipped muted character effect: %s", name)
         end
     end
 end
 
-function TMDTEventHandlers.SAEL_DIED(character, count)
-    local playerRoot = tmdt.isTMCharacter(player)
+function CoBDTEventHandlers.SAEL_DIED(character, count)
+    local playerRoot = cobdt.isTMCharacter(player)
 
     if (playerRoot == "saelaris") or UnitInRaid(character) or UnitInParty(character) then
         -- don't do anything if we are in party with or identify as saelaris
@@ -143,14 +143,14 @@ function eventHandlers.CHAT_MSG_ADDON(self, prefix, message, channel, sender, ta
             tinsert(eventData, piece)
         end
 
-        -- verify that it's a valid TMDT event
+        -- verify that it's a valid CoBDT event
         local event = eventData[1]
-        if TMDTEventHandlers[event] then
+        if CoBDTEventHandlers[event] then
             -- call event with all payload packets as arguments
-            TMDTEventHandlers[event](unpack(eventData, 2))
+            CoBDTEventHandlers[event](unpack(eventData, 2))
             debugPrint("dispatched %s event. Payload: %s", event, table.concat(eventData, ", ", 2))
         else
-            debugPrint("|cffff0000TMDTError: Unhandled event: %s", tostring(event))
+            debugPrint("|cffff0000CoBDTError: Unhandled event: %s", tostring(event))
         end
     end
 end
@@ -165,8 +165,8 @@ function eventHandlers.PLAYER_DEAD()
         C_Timer.After(options.timeout, function() deathEventCooldown = false end)
     end
 
-    local member = tmdt.isTMCharacter(player)
-    local guilded = IsInGuild() and GetGuildInfo("player") == tmdt.guildName
+    local member = cobdt.isTMCharacter(player)
+    local guilded = IsInGuild() and GetGuildInfo("player") == cobdt.guildName
     local isParty = IsInGroup()
     local isRaid = IsInRaid()
     local instanced, instanceType = IsInInstance()
@@ -175,7 +175,7 @@ function eventHandlers.PLAYER_DEAD()
         if member == "saelaris" then
             if guilded and allowedInstanceTypes[instanceType] then
                 broadcast{
-                    event = TMDTEvent.SAEL_DIED,
+                    event = CoBDTEvent.SAEL_DIED,
                     message = string.lower(player),
                     channel = addonMessageChannels.GUILD,
                 }
@@ -197,7 +197,7 @@ function eventHandlers.PLAYER_DEAD()
             end
 
             broadcast{
-                event = TMDTEvent.MEMBER_DIED,
+                event = CoBDTEvent.MEMBER_DIED,
                 message = member,
                 channel = msgChannel,
             }

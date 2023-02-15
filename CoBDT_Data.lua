@@ -1,16 +1,16 @@
 -- contains known characters and their related data
-local addonName, tmdt = ...
+local addonName, cobdt = ...
 local module = {}
-tmdt.modules.data = module
+cobdt.modules.data = module
 
--- tmdt module
+-- cobdt module
 local options, db
 function module.init(opt, database)
     options, db = opt, database
 end
 
--- tmdt locals
-local debugPrint = tmdt.debugPrint
+-- cobdt locals
+local debugPrint = cobdt.debugPrint
 
 --------------------
 -- Character Data --
@@ -160,7 +160,7 @@ do
 
     if next(bad) then
         C_Timer.After(1, function()
-            debugPrint("BAD! VERY BAD! There are characters with Capital Letters in the TMDT character database:")
+            debugPrint("BAD! VERY BAD! There are characters with Capital Letters in the CoBDT character database:")
             debugPrint(table.concat(bad, ", "))
         end)
     end
@@ -168,4 +168,4 @@ end
 
 
 -- ship it
-tmdt.characterData = characterData
+cobdt.characterData = characterData

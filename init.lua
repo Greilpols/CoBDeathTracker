@@ -1,6 +1,6 @@
 -- handles initial setup, savedvariables, and initial event registration
-local addonName, tmdt = ...
-tmdt.modules = {}
+local addonName, cobdt = ...
+cobdt.modules = {}
 
 -- event frame setup --
 -----------------------
@@ -11,8 +11,8 @@ frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 -- lua locals
 local format = string.format
 
--- TMDT locals
-local addonMsgPrefix = "TMDTMsg"
+-- CoBDT locals
+local addonMsgPrefix = "CoBDTMsg"
 local eventHandlers = {}
 local options = {}
 local db = {}
@@ -36,8 +36,8 @@ local function verifyOptions()
     }
 
     for k, v in pairs(opts) do
-        if not TMDT_Options[k] then
-            TMDT_Options[k] = v
+        if not CoBDT_Options[k] then
+            CoBDT_Options[k] = v
         end
     end
 end
@@ -65,7 +65,7 @@ local function addonPrint(msg, ...)
 
     print(format("%sTM|r%sDT|r:: %s", colors.tm_green, colors.tm_purple, msg))
 end
-tmdt.addonPrint = addonPrint
+cobdt.addonPrint = addonPrint
 
 -- debugPrint helper
 local function debugPrint(msg, ...)
@@ -77,35 +77,35 @@ local function debugPrint(msg, ...)
         print(format("%sTM|r%sDT%sDebug|r:: %s", colors.tm_green, colors.tm_purple, colors.tm_debug, msg))
     end
 end
-tmdt.debugPrint = debugPrint
+cobdt.debugPrint = debugPrint
 
 -- handle addon load complete
 function eventHandlers.ADDON_LOADED(self, ...)
     if ... == addonName then
         frame:UnregisterEvent("ADDON_LOADED")
 
-        -- Hook up SavedVariables: TMDT_Options, TMDT_DB
-        TMDT_Options = TMDT_Options or {}
-        options = TMDT_Options
+        -- Hook up SavedVariables: CoBDT_Options, CoBDT_DB
+        CoBDT_Options = CoBDT_Options or {}
+        options = CoBDT_Options
         verifyOptions()
 
-        TMDT_DB = TMDT_DB or {}
-        db = TMDT_DB
+        CoBDT_DB = CoBDT_DB or {}
+        db = CoBDT_DB
         verifyDB()
 
         -- initialize all other addon files now that we have the SavedVariables figured out
-        for name, mod in pairs(tmdt.modules) do
+        for name, mod in pairs(cobdt.modules) do
             mod.init(options, db, frame)
 
-            debugPrint("tmdt initialized module [%s]", name)
+            debugPrint("cobdt initialized module [%s]", name)
         end
 
         if db.extraCharacters then
-            tmdt.patchCharacterList(db.extraCharacters)
+            cobdt.patchCharacterList(db.extraCharacters)
         end
 
-        local identity = tmdt.isTMCharacter(tmdt.player)
-        addonPrint("Loaded. You are %s%s|r.", identity and "|cff00aa00" or "|cffaa0000", identity and tmdt.firstToUpper(identity) or "not a recognized TM member")
+        local identity = cobdt.isTMCharacter(cobdt.player)
+        addonPrint("Loaded. You are %s%s|r.", identity and "|cff00aa00" or "|cffaa0000", identity and cobdt.firstToUpper(identity) or "not a recognized TM member")
     end
 end
 
@@ -123,14 +123,14 @@ frame:SetScript("OnEvent", function(self, event, ...)
 end)
 
 -- gather and export some info
-tmdt.player = GetUnitName("player")
-tmdt.playerClass  = UnitClassBase("player")
+cobdt.player = GetUnitName("player")
+cobdt.playerClass  = UnitClassBase("player")
 
 -- export some stuff to addon namespace
-tmdt.addonMsgPrefix = addonMsgPrefix
-tmdt.eventHandlers = eventHandlers
-tmdt.frame = frame
-tmdt.options = options
-tmdt.db = db
-tmdt.verifyOptions = verifyOptions
-tmdt.guildName = "Twisted Minds"
+cobdt.addonMsgPrefix = addonMsgPrefix
+cobdt.eventHandlers = eventHandlers
+cobdt.frame = frame
+cobdt.options = options
+cobdt.db = db
+cobdt.verifyOptions = verifyOptions
+cobdt.guildName = "Twisted Minds"

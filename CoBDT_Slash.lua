@@ -1,21 +1,21 @@
 -- handles slash commands
-local addonName, tmdt = ...
+local addonName, cobdt = ...
 local module = {}
-tmdt.modules.slash = module
+cobdt.modules.slash = module
 
--- tmdt module
+-- cobdt module
 local options, db
 function module.init(opt, database)
     options, db = opt, database
 end
 
--- tmdt locals
-local addonPrint = tmdt.addonPrint
-local debugPrint = tmdt.debugPrint
-local play = tmdt.play
-local firstToUpper = tmdt.firstToUpper
+-- cobdt locals
+local addonPrint = cobdt.addonPrint
+local debugPrint = cobdt.debugPrint
+local play = cobdt.play
+local firstToUpper = cobdt.firstToUpper
 local commandAlias
-local player = tmdt.player
+local player = cobdt.player
 local handlers = {}
 
 
@@ -47,12 +47,12 @@ do
 end
 
 -- SLASH_XX setup
-SLASH_TMDT1 = "/tmdt"
+SLASH_CoBDT1 = "/cobdt"
 
 -- holds all the final command handlers
 handlers.help = {
     command = function()
-        addonPrint("Valid commands for TMDT are;")
+        addonPrint("Valid commands for CoBDT are;")
 
         for label, cmd in pairs(handlers) do
             local argHint = cmd.hint or ""
@@ -78,7 +78,7 @@ handlers.help = {
                         aliases[#aliases+1] = key
                     end
                 end
-                local slashCmds = ("|cff00f000/tmdt %s|r "):format(table.concat(aliases, ", "))
+                local slashCmds = ("|cff00f000/cobdt %s|r "):format(table.concat(aliases, ", "))
 
                 -- add argument hint?
                 if argHint then
@@ -123,7 +123,7 @@ handlers.testPlay = {
 handlers.listAll = {
     command = function()
         addonPrint("Currently known TM characters:")
-        for main, data in pairs(tmdt.characterData) do
+        for main, data in pairs(cobdt.characterData) do
             local lst = firstToUpper(main)
             if next(data.alts) then
                 lst = lst .. " |cffa9a9a9(" .. table.concat(data.alts, ", ") .. ")|r"
@@ -142,7 +142,7 @@ handlers.toggleMute = {
     command = function(args)
         if args[2] and type(args[2]) == "string" then
             local character = strtrim(args[2])
-            local member = tmdt.isTMCharacter(character)
+            local member = cobdt.isTMCharacter(character)
 
             if member then
                 if db.mutedCharacters[member] then
@@ -160,13 +160,13 @@ handlers.toggleMute = {
             end
         else
             options.muteall = not options.muteall
-            local newState = options.muteall and ("|cffff0000" .. "TMDT Muted") or ("|cff00ff00" .. "TMDT Unmuted")
+            local newState = options.muteall and ("|cffff0000" .. "CoBDT Muted") or ("|cff00ff00" .. "CoBDT Unmuted")
             addonPrint(newState)
             return true
         end
     end,
 
-    description = "Toggles muting TMDT completely, or if character name provided, mutes that specific character.",
+    description = "Toggles muting CoBDT completely, or if character name provided, mutes that specific character.",
     hint = "<main or alt>"
 }
 
@@ -242,7 +242,7 @@ handlers.setGetChannel = {
         end
     end,
 
-    description = "Sets which audio channel is used to play TMDT effects. If used with no arguments, shows current setting.",
+    description = "Sets which audio channel is used to play CoBDT effects. If used with no arguments, shows current setting.",
     hint = "<sound channel>",
 }
 
@@ -251,10 +251,10 @@ handlers.getAlts = {
         if args[2] then
             local main = strtrim(args[2])
 
-            if tmdt.isTMCharacter(main) then
-                if #tmdt.characterData[main].alts > 0 then
-                    local alts = table.concat(tmdt.characterData[main].alts, ", ")
-                    addonPrint("%s has %i alts: [%s]", firstToUpper(main), #tmdt.characterData[main].alts, alts)
+            if cobdt.isTMCharacter(main) then
+                if #cobdt.characterData[main].alts > 0 then
+                    local alts = table.concat(cobdt.characterData[main].alts, ", ")
+                    addonPrint("%s has %i alts: [%s]", firstToUpper(main), #cobdt.characterData[main].alts, alts)
                 else
                     addonPrint("%s has no alts", firstToUpper(main))
                 end
@@ -278,7 +278,7 @@ handlers.setAlt = {
             local main = strtrim(args[2])
             local newalt = strtrim(args[3])
 
-            if tmdt.isTMCharacter(main) then
+            if cobdt.isTMCharacter(main) then
                 local dbec = db.extraCharacters
                 if not dbec[main] then dbec[main] = {} end
 
@@ -289,7 +289,7 @@ handlers.setAlt = {
                         dbec[main] = {}
                     end
                     tinsert(dbec[main], newalt)
-                    tmdt.patchCharacterList(db.extraCharacters)
+                    cobdt.patchCharacterList(db.extraCharacters)
 
                     addonPrint("created a new alt for main %s called %s", firstToUpper(main), firstToUpper(newalt))
                 end
@@ -316,7 +316,7 @@ handlers.removeAlt = {
         local main = strtrim(args[2])
         local alt = strtrim(args[3])
 
-        if tmdt.isTMCharacter(main) then
+        if cobdt.isTMCharacter(main) then
             local dbec = db.extraCharacters
             if dbec[main] then
                 local found = false
@@ -346,7 +346,7 @@ handlers.removeAlt = {
         return true
     end,
 
-    description = "Remove an alt from a known main. Only works for alts you added via /tmdt setalt",
+    description = "Remove an alt from a known main. Only works for alts you added via /cobdt setalt",
     hint = "<main name> <alt name>",
 }
 
@@ -354,7 +354,7 @@ handlers.queryName = {
     command = function(args)
         if args[2] then
             local query = firstToUpper(args[2])
-            local tmChar = tmdt.isTMCharacter(query)
+            local tmChar = cobdt.isTMCharacter(query)
             local mainCharacter = tmChar and firstToUpper(tmChar) or false
             addonPrint("\"%s\" %s", query, mainCharacter and format("is a known TM character (main: \"%s\")", mainCharacter) or ("is NOT a known TM character"))
 
@@ -364,7 +364,7 @@ handlers.queryName = {
         end
     end,
 
-    description = "Check whether a character name is recognized in TMDT, searches all mains and alts.",
+    description = "Check whether a character name is recognized in CoBDT, searches all mains and alts.",
     hint = "<name to query>",
 }
 
@@ -398,12 +398,12 @@ handlers.wipeSettings = {
     command = function()
         addonPrint("Wiped settings & (extra) alt database")
         wipe(db.extraCharacters)
-        wipe(TMDT_Options)
-        tmdt.verifyOptions()
+        wipe(CoBDT_Options)
+        cobdt.verifyOptions()
         return true
     end,
 
-    description = "Wipes out your TMDT settings and your custom alt database, if any.",
+    description = "Wipes out your CoBDT settings and your custom alt database, if any.",
 }
 
 handlers.checkGuilded = {
@@ -411,10 +411,10 @@ handlers.checkGuilded = {
 
         if IsInGuild() then
             local guild = GetGuildInfo("player")
-            if guild == tmdt.guildName then
-                addonPrint("%s is a member of <%s>", player, tmdt.guildName)
+            if guild == cobdt.guildName then
+                addonPrint("%s is a member of <%s>", player, cobdt.guildName)
             else
-                addonPrint("%s is |cffff0000NOT|r a member of <%s>", player, tmdt.guildName)
+                addonPrint("%s is |cffff0000NOT|r a member of <%s>", player, cobdt.guildName)
             end
         else
             addonPrint("%s is not in a guild.", player)
@@ -423,7 +423,7 @@ handlers.checkGuilded = {
         return true
     end,
 
-    description = "Check whether the current character is detected as being a member of the <" .. tmdt.guildName .. "> guild.",
+    description = "Check whether the current character is detected as being a member of the <" .. cobdt.guildName .. "> guild.",
 }
 
 -- picks the appropriate handler based on keywords / aliases
@@ -478,9 +478,9 @@ local function commandHandler(msg, EditBox)
 
             if not success then
                 if commandAlias[cmd].hint then
-                    addonPrint("Usage: /tmdt %s %s", cmd, commandAlias[cmd].hint)
+                    addonPrint("Usage: /cobdt %s %s", cmd, commandAlias[cmd].hint)
                 else
-                    addonPrint("Error trying to use /tmdt %s", cmd)
+                    addonPrint("Error trying to use /cobdt %s", cmd)
                 end
             end
         else
@@ -492,4 +492,4 @@ local function commandHandler(msg, EditBox)
     end
 end
 
-SlashCmdList["TMDT"] = commandHandler
+SlashCmdList["CoBDT"] = commandHandler

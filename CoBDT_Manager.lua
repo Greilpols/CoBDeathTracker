@@ -1,21 +1,21 @@
 -- manages stuff and things, or something, I don't know anymore
-local addonName, tmdt = ...
+local addonName, cobdt = ...
 local module = {}
-tmdt.modules.manager = module
+cobdt.modules.manager = module
 
--- tmdt module
+-- cobdt module
 local options, db
 function module.init(opt, database)
     options, db = opt, database
 end
 
 -- module locals
-local debugPrint = tmdt.debugPrint
-local characterData = tmdt.characterData
+local debugPrint = cobdt.debugPrint
+local characterData = cobdt.characterData
 
 -- paths
-local pre = "Interface\\AddOns\\TMDeathTracker\\Sounds\\"
-local pre_special = "Interface\\AddOns\\TMDeathTracker\\Sounds\\wilhelm_distant\\"
+local pre = "Interface\\AddOns\\CoBDeathTracker\\Sounds\\"
+local pre_special = "Interface\\AddOns\\CoBDeathTracker\\Sounds\\wilhelm_distant\\"
 local post = ".mp3"
 local testsound = "wilhelm"
 
@@ -30,13 +30,13 @@ local saelspecial = {
 }
 
 -- retrieves a sound by mian character name
-function tmdt.getCharacterSound(id)
+function cobdt.getCharacterSound(id)
     if id == "test" then
         return pre .. testsound .. post
     elseif id == "saelspecial" then
         return pre_special .. saelspecial[math.random(1, #saelspecial)] .. post
     else
-        local main = tmdt.isTMCharacter(id)
+        local main = cobdt.isTMCharacter(id)
         if main then
             if characterData[main].sound then
                 return pre .. characterData[main].sound .. post
@@ -95,5 +95,5 @@ local function patchCharacterList(extraCharacters)
 end
 
 -- make chars public for other uses
-tmdt.patchCharacterList = patchCharacterList
-tmdt.isTMCharacter = isTMCharacter
+cobdt.patchCharacterList = patchCharacterList
+cobdt.isTMCharacter = isTMCharacter
