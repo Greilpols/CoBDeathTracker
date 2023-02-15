@@ -1,1 +1,1 @@
-Unless you are a member of **\<Twisted Minds\> - Hydraxian Waterlords** then this AddOn is not for you.
+Unless you are a member of **\<Cats on Balconies\> - Nethergarde Keep** then this AddOn is not for you.
