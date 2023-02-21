@@ -223,7 +223,7 @@ function eventHandlers.UNIT_SPELLCAST_SUCCEEDED(null, caster, something, spellID
     --Does not break anything either, so entirely safe to use; worst case scenario it goes off when someone gets a pet
     if spellID == 55884 and caster == "player" then
         broadcast{
-                event = COBDTEvent.NEW_MOUNT_ACQUIRED,
+                event = CoBDTEvent.NEW_MOUNT_ACQUIRED,
                 message = "hiddeneasteregg", -- TODO find fitting name for mount acquired
                 channel = addonMessageChannels.GUILD,
             }
