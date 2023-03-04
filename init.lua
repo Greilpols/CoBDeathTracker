@@ -106,7 +106,7 @@ function eventHandlers.ADDON_LOADED(self, ...)
             cobdt.patchCharacterList(db.extraCharacters)
         end
 
-        local identity = cobdt.isCoBCharacter(cobdt.player)
+        local identity = cobdt.isCOBCharacter(cobdt.player)
         addonPrint("Loaded. You are %s%s|r.", identity and "|cff00aa00" or "|cffaa0000", identity and cobdt.firstToUpper(identity) or "not a recognized CoB member")
     end
 end
